@@ -1,0 +1,24 @@
+northwind:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: ZJEGFXO-RD87148
+      user: "{{ env_var('SNOWFLAKE_USERNAME') }}"
+      password: "{{ env_var('SNOWFLAKE_PASSWORD') }}"
+      role: accountadmin
+      database: northwind
+      warehouse: xsmall_wh
+      schema: public
+      threads: 1
+    
+    prod:
+      type: snowflake
+      account: ZJEGFXO-RD87148
+      user: "{{ env_var('SNOWFLAKE_USERNAME') }}"
+      password: "{{ env_var('SNOWFLAKE_PASSWORD') }}"
+      role: accountadmin
+      database: northwind
+      warehouse: xsmall_wh
+      schema: public
+      threads: 1

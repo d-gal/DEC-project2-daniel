@@ -1,0 +1,131 @@
+version: 2
+
+models:
+  - name: fact_inventory_daily
+    description: |
+      Daily periodic snapshot of inventory levels for all products. This table captures 
+      the state of inventory at the end of each day, enabling historical trend analysis 
+      of stock levels, stockouts, and reorder point violations.
+      
+      Grain: One row per product per day
+      
+      Update frequency: Daily (incremental)
+      
+      Business use cases:
+      - Track inventory trends over time
+      - Identify products frequently going out of stock
+      - Monitor reorder point violations
+      - Calculate inventory carrying costs
+      - Analyze seasonal inventory patterns
+    
+    config:
+      materialized: incremental
+      unique_key: ['products_key', 'snapshot_date']
+    
+    columns:
+      - name: inventory_snapshot_key
+        description: |
+          Surrogate key for the inventory snapshot record. Generated using a hash of 
+          products_key and snapshot_date to ensure uniqueness for each product-date combination.
+        tests:
+          - unique
+          - not_null
+      
+      - name: products_key
+        description: |
+          Surrogate key to dim_product
+          
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_product')
+              field: products_key
+              config:
+                severity: error
+      
+      - name: snapshot_date
+        description: |
+          The date for which this inventory snapshot was taken. Represents the inventory 
+          position at the end of business on this date.
+          
+          This forms part of the unique key along with products_key to ensure one snapshot 
+          per product per day.
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "<= current_date"
+              config:
+                severity: warn
+      
+      - name: units_in_stock
+        description: |
+          The number of units physically available in the warehouse at the time of snapshot.
+          This represents inventory that can be immediately allocated to orders.
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              inclusive: true
+      
+      - name: units_on_order
+        description: |
+          The number of units ordered from suppliers but not yet received. These units 
+          are in transit or awaiting shipment and will increase units_in_stock when received.
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              inclusive: true
+      
+      - name: reorder_level
+        description: |
+          The minimum stock level at which a reorder should be triggered. When units_in_stock 
+          falls to or below this level, purchasing should place a new order to replenish inventory.
+          
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              inclusive: true
+      
+      - name: available_to_promise
+        description: |
+          Total units available to fulfill customer orders, calculated as units_in_stock + units_on_order.
+
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "= units_in_stock + units_on_order"
+              config:
+                severity: error
+      
+      - name: stock_value
+        description: |
+          The monetary value of inventory on hand, calculated as units_in_stock × unit_price.
+          
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              inclusive: true
+      
+      
+      - name: dbt_created_at
+        description: |
+          Timestamp when this record was created by dbt. Used for auditing and troubleshooting 
+          data pipeline issues.
+        tests:
+          - not_null
+
+    tests:
+      # Test that we have exactly one snapshot per product per date
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - products_key
+            - snapshot_date
+      
+      # Test that stockout flag logic is correct
+      - dbt_utils.expression_is_true:
+          expression: "NOT (is_stockout = TRUE AND units_in_stock > 0)"
+          config:
+            severity: error

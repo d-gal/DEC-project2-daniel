@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: fact_order
+    description: "This table contains fact data about orders including product and supplier details."
+    columns:
+      - name: order_key
+        description: The surrogate key of the order 
+        tests:
+          - not_null
+          - unique
+      - name: order_id
+        description: The natural key of the order
+        tests:
+          - not_null           
+      - name: product_id
+        description: The natural key of the product
+        tests:
+          - not_null
+      - name: order_date
+        description: The date when the order was placed 
+        tests:
+          - not_null      
+      - name: quantity
+        description: The quantity of the product ordered
+        tests:
+          - not_null
+      - name: unit_price
+        description: The unit price of the product at the time of order
+        tests:
+          - not_null
+
