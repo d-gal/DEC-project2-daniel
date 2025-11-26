@@ -25,8 +25,8 @@ Improve demand prediction to optimize inventory and procurement
 ### ELT Pipeline (technologies used)
 ![ELT Pipeline - technologies used](./images/Northwind_solution_architecture.png)
 
-### ERD Diagram
-![Marts ERD diagram](./images/Northwind_Marts_ERD.png)
+### ER Diagram
+![Marts ER diagram](./images/Northwind_Marts_ERD.png)
 
 
 ## Running instructions
@@ -71,8 +71,27 @@ dbt --version
 
 
 
-Screenshots
+## Screenshots
 
-Dashboard (https://5bbb6e8f.us2a.app.preset.io/superset/dashboard/8/?native_filters_key=96OVmvXhLfwUJcxarjZmQQ23LGvzHX9pRLDwSLCSU5ObJMS5WwCA4V-Xr1Qdcsws)
 
-![Marts ERD diagram](./images/Northwind_Marts_ERD.png)
+
+
+### Airbyte ingestion
+![Airbyte](./images/airbyte_connection.png)
+
+### Snowflake
+![Snowflake](./images/snowflake_dw.png)
+
+
+
+### DBT hosted on ECS - setup and schedule
+
+
+### Dashboard 
+(https://5bbb6e8f.us2a.app.preset.io/superset/dashboard/8/?native_filters_key=96OVmvXhLfwUJcxarjZmQQ23LGvzHX9pRLDwSLCSU5ObJMS5WwCA4V-Xr1Qdcsws)
+
+![Charts](./images/dashboard_screenshot.png)
+
+### Semantic Data Layer
+![Semantic](./images/semantic_data_layer.png)
+
