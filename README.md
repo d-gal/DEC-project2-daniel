@@ -20,6 +20,7 @@ Improve demand prediction to optimize inventory and procurement
 - Product lifecycle analysis
 - Regional demand variations
 
+Inventory_snapshot_daily is a periodic snapshot fact table that was built to answer most of these questions however due to the static nature of the source data it wasn't possible to create very informatative charts. A future opportunity could be to develop some mock source data to better showcase the use of this table.   
 
 ## Solution architecture
 ### ELT Pipeline (technologies used)
@@ -46,9 +47,6 @@ NOTE it is a pre-requisite to have both a Snowflake and Airbyte account
 
 ### Transformation - DBT
 
-
-
-### Installation
 
 1. Open your terminal and activate your virtual environment  e.g. `conda activate dec`
 1. Install dbt:
@@ -84,7 +82,13 @@ dbt --version
 
 
 
-### DBT hosted on ECS - setup and schedule
+### DBT hosted on ECR/ECS
+
+ECR
+![ECR](./images/ECR.png)
+
+ECS logs
+![ECS](./images/ECS.png)
 
 
 ### Dashboard 

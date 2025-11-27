@@ -1,0 +1,14 @@
+[0m12:01:52.756872 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000150F05C64F0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000150EFFE31F0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000150F342A3D0>]}
+
+
+============================== 12:01:52.768575 | 47fa713f-57b1-422b-98c5-4528c09d2c86 ==============================
+[0m12:01:52.768575 [info ] [MainThread]: Running with dbt=1.7.0
+[0m12:01:52.771324 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'profiles_dir': 'C:\\Users\\dpgal\\.dbt', 'log_format': 'default', 'use_experimental_parser': 'False', 'indirect_selection': 'eager', 'write_json': 'True', 'invocation_command': 'dbt run', 'printer_width': '80', 'introspect': 'True', 'log_cache_events': 'False', 'quiet': 'False', 'send_anonymous_usage_stats': 'True', 'fail_fast': 'False', 'target_path': 'None', 'debug': 'False', 'log_path': 'logs', 'partial_parse': 'True', 'warn_error': 'None', 'no_print': 'None', 'version_check': 'True', 'use_colors': 'True', 'cache_selected_only': 'False', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])'}
+[0m12:01:52.771324 [error] [MainThread]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path C:\Users\dpgal\Desktop\DEC-project2-daniel\dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m12:01:52.775418 [debug] [MainThread]: Command `dbt run` failed at 12:01:52.775418 after 0.16 seconds
+[0m12:01:52.775418 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000150F05C64F0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000150F342A4C0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000150F342AD30>]}
+[0m12:01:52.778444 [debug] [MainThread]: Flushing usage events

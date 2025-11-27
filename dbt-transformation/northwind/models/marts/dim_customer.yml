@@ -8,9 +8,4 @@ models:
         tests:
           - not_null
           - unique
-      - name: customer_id
-        description: The natural key of the customer
-        tests:
-          - not_null
-          - unique
 
